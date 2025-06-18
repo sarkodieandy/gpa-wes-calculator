@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpa_cal/screens/pdf_preview_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -14,18 +15,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
-    // ✅ Configure test ads for emulator to prevent crash
-    final config = RequestConfiguration(testDeviceIds: ['EMULATOR']);
-    MobileAds.instance.updateRequestConfiguration(config);
-
-    // ✅ Initialize Google Mobile Ads
+    // ⚠️ Don't include test devices in production
     await MobileAds.instance.initialize();
     await AdService.initialize();
   } catch (e) {
     debugPrint('Ad initialization failed: $e');
   }
 
-  // ✅ Load premium status
   final prefs = await SharedPreferences.getInstance();
   final isPremium = prefs.getBool('isPremium') ?? false;
 
@@ -64,6 +60,7 @@ class MyApp extends StatelessWidget {
         '/gpa': (context) => const GpaCalculatorScreen(),
         '/wes': (context) => const WesEvaluationScreen(),
         '/premium': (context) => const PremiumScreen(),
+        '/pdf': (context) => const PdfPreviewScreen(), // ✅ PDF route added
       },
     );
   }

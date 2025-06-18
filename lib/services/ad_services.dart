@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdService {
-  // ✅ Replace with your actual AdMob unit IDs
-  static const String bannerAdUnitId = 'ca-app-pub-5462334042904965/2784557347';
+  // ✅ REAL AdMob Unit IDs (replace with yours if different)
+  static const String bannerAdUnitId = 'ca-app-pub-5462334042904965/6839365736';
   static const String interstitialAdUnitId =
-      'ca-app-pub-5462334042904965/6532230664';
+      'ca-app-pub-5462334042904965/7397768932';
   static const String rewardedAdUnitId =
-      'ca-app-pub-5462334042904965/4939338587';
+      'ca-app-pub-5462334042904965/9549273647';
 
   static InterstitialAd? _interstitialAd;
   static RewardedAd? _rewardedAd;
@@ -39,7 +39,7 @@ class AdService {
     if (_interstitialAd != null) {
       _interstitialAd!.show();
       _interstitialAd = null;
-      loadInterstitialAd(); // Preload next
+      loadInterstitialAd();
     } else {
       debugPrint('⚠️ Interstitial ad not ready');
     }
@@ -80,7 +80,7 @@ class AdService {
 
       _rewardedAd!.show(
         onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-          debugPrint('🎉 User earned reward: \${reward.amount}');
+          debugPrint('🎉 User earned reward: ${reward.amount}');
           onRewarded();
         },
       );
@@ -88,9 +88,7 @@ class AdService {
       _rewardedAd = null;
     } else {
       debugPrint('⚠️ No rewarded ad available');
-      if (onAdUnavailable != null) {
-        onAdUnavailable();
-      }
+      if (onAdUnavailable != null) onAdUnavailable();
     }
   }
 

@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 const Spacer(flex: 2),
 
-                // Logo
+                // ⭐ App Logo
                 Icon(
                       IconlyBold.star,
                       size: 100,
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
 
                 const SizedBox(height: 24),
 
-                // Title
+                // 📘 Title
                 Text(
                   'GPA & WES Calculator',
                   style: poppins(
@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
 
                 const Spacer(),
 
-                // GPA Button
+                // 📄 GPA Calculator Button
                 AnimatedButton(
                   icon: IconlyLight.paper,
                   text: 'GPA Calculator',
@@ -73,11 +73,31 @@ class HomeScreen extends StatelessWidget {
 
                 const SizedBox(height: 16),
 
-                // WES Button
+                // 🌍 WES Evaluation Button (Rewarded Ad Protected)
                 AnimatedButton(
                   icon: IconlyLight.document,
                   text: 'WES Evaluation',
-                  onPressed: () => Navigator.pushNamed(context, '/wes'),
+                  onPressed: () {
+                    AdService.showRewardedAd(
+                      onRewarded: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/wes',
+                        ); // Unlocks on reward
+                      },
+                      onAdUnavailable: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Ad not ready. Please try again shortly.',
+                              style: poppins(),
+                            ),
+                            backgroundColor: theme.colorScheme.error,
+                          ),
+                        );
+                      },
+                    );
+                  },
                   gradient: LinearGradient(
                     colors: [
                       theme.colorScheme.secondary,
@@ -88,7 +108,7 @@ class HomeScreen extends StatelessWidget {
 
                 const Spacer(),
 
-                // Premium Feature
+                // 🧾 Export PDF Button (Rewarded Ad Protected)
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -129,7 +149,10 @@ class HomeScreen extends StatelessWidget {
                         onPressed: () {
                           AdService.showRewardedAd(
                             onRewarded: () {
-                              Navigator.pushNamed(context, '/pdf');
+                              Navigator.pushNamed(
+                                context,
+                                '/pdf',
+                              ); // Unlocks on reward
                             },
                             onAdUnavailable: () {
                               ScaffoldMessenger.of(context).showSnackBar(

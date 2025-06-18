@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.terloservices.gpa_cal" // ✅ Matches applicationId
+    namespace = "com.terloservices.gpa_cal"
     compileSdk = flutter.compileSdkVersion
 
     ndkVersion = "29.0.13113456"
@@ -23,8 +23,8 @@ android {
         applicationId = "com.terloservices.gpa_cal"
         minSdk = 23
         targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        versionCode = 3 // ✅ Use Int, NOT String
+        versionName = "1.2.1" // ✅ Update to match your intended release
     }
 
     signingConfigs {

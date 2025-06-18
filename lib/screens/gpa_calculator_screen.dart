@@ -25,6 +25,7 @@ class _GpaCalculatorScreenState extends State<GpaCalculatorScreen> {
   String _selectedGrade = 'A';
   double _selectedCreditHours = 3.0;
   bool _snackBarActive = false;
+  bool _hasWatchedAd = false;
 
   final List<String> _grades = ['A', 'B+', 'B', 'C+', 'C', 'D+', 'D', 'E', 'F'];
   final List<double> _creditOptions = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0];
@@ -112,7 +113,10 @@ class _GpaCalculatorScreenState extends State<GpaCalculatorScreen> {
                     IconButton(
                       icon: const Icon(IconlyLight.swap),
                       color: theme.colorScheme.primary,
-                      onPressed: appState.resetCalculator,
+                      onPressed: () {
+                        appState.resetCalculator();
+                        setState(() => _hasWatchedAd = false); // Reset ad state
+                      },
                     ),
                   ],
                 ),
@@ -302,25 +306,41 @@ class _GpaCalculatorScreenState extends State<GpaCalculatorScreen> {
                       );
                       return;
                     }
-                    appState.calculateGPA();
-                    _showSnackBar(
-                      context,
-                      'GPA calculated',
-                      theme.colorScheme.primary,
+
+                    AdService.showRewardedAd(
+                      onRewarded: () {
+                        setState(() {
+                          _hasWatchedAd = true;
+                        });
+                        appState.calculateGPA();
+                        _showSnackBar(
+                          context,
+                          '🎉 GPA calculated after watching ad!',
+                          theme.colorScheme.primary,
+                        );
+                      },
+                      onAdUnavailable: () {
+                        _showSnackBar(
+                          context,
+                          '⚠️ Rewarded ad not available. Try again later.',
+                          theme.colorScheme.error,
+                        );
+                      },
                     );
                   },
                 ),
 
-                if (appState.gpaResult != null) ...[
-                  const SizedBox(height: 24),
+                const SizedBox(height: 24),
+
+                if (appState.gpaResult != null && _hasWatchedAd)
                   _buildGpaCard(
                     context,
                     appState.gpaResult!,
                     appState.selectedUniversity!.name,
                   ),
-                ],
 
                 const SizedBox(height: 24),
+
                 if (_isBannerAdLoaded)
                   SizedBox(
                     height: _bannerAd.size.height.toDouble(),

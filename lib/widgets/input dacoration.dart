@@ -5,15 +5,21 @@ InputDecoration customInputDecoration(
   String label,
   IconData icon,
 ) {
+  final theme = Theme.of(context);
   return InputDecoration(
     labelText: label,
     filled: true,
-    labelStyle: Theme.of(context).textTheme.labelMedium,
-    fillColor: Theme.of(context).colorScheme.surfaceContainer,
+    fillColor: theme
+        .colorScheme
+        .surfaceContainerHighest, // surfaceContainer renamed to surfaceVariant in newer Material3
+    labelStyle: theme.textTheme.labelMedium,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide.none,
     ),
-    prefixIcon: Icon(icon, color: Theme.of(context).colorScheme.primary),
+    prefixIcon: Icon(icon, color: theme.colorScheme.primary),
+    prefixIconConstraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+    // Optional:
+    // hintText: 'Enter $label',
   );
 }

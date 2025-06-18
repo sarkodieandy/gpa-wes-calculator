@@ -23,7 +23,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
   void _loadAd() {
     _bannerAd = BannerAd(
       adUnitId:
-          'ca-app-pub-5462334042904965/2784557347', // Replace with your real AdMob ID
+          'ca-app-pub-5462334042904965/6839365736', // Replace with your real AdMob ID
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(

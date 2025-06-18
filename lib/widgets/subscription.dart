@@ -21,8 +21,9 @@ class SubscriptionOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final cardColor =
-        isRecommended ? theme.colorScheme.primaryContainer : theme.cardColor;
+    final cardColor = isRecommended
+        ? theme.colorScheme.primaryContainer
+        : theme.cardColor;
 
     return GestureDetector(
       onTap: onTap,
